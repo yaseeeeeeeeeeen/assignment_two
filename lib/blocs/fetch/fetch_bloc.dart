@@ -9,8 +9,10 @@ part 'fetch_event.dart';
 part 'fetch_state.dart';
 
 class FetchBloc extends Bloc<FetchEvent, FetchState> {
+  late List<GitIssues> data;
   FetchBloc() : super(FetchInitial()) {
     on<DataFetchEvent>(dataFetchEvent);
+    on<AddedToFav>(addedToFav);
   }
 
   FutureOr<void> dataFetchEvent(
@@ -19,11 +21,16 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     final response = await ApiServices.getDatas(ApiUrl.dataGetUrl);
     print(response.body);
     if (response.statusCode == 200) {
-      List<GitIssues> data = gitIssuesFromJson(response.body);
+      data = gitIssuesFromJson(response.body);
       print(data.length);
       emit(DataFetchedState(response: data));
     } else {
       emit(DataFetchFailedState());
     }
+  }
+
+  FutureOr<void> addedToFav(AddedToFav event, Emitter<FetchState> emit) async {
+    emit(AddToFav(index: event.index));
+    emit(DataFetchedState(response: data));
   }
 }

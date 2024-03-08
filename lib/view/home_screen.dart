@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:implause_assignment/blocs/bloc/fetch_bloc.dart';
+import 'package:implause_assignment/blocs/fetch/fetch_bloc.dart';
 import 'package:implause_assignment/utils/styles/colors.dart';
+import 'package:implause_assignment/utils/styles/textstyles.dart';
 import 'package:implause_assignment/utils/widgets/custom_tile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,11 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
-        title: Text(
-          "Git Track",
-          style: TextStyle(color: AppColors.white),
-        ),
+        title: const Text("Git Track"),
         actions: [
           IconButton(
               onPressed: () {
@@ -40,25 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<FetchBloc, FetchState>(
           builder: (context, state) {
             if (state is LoadingState) {
-              print("Loading State");
               return Center(
                   child:
                       CircularProgressIndicator(color: AppColors.appbarColor));
             } else if (state is DataFetchedState) {
-              print(state.response.length);
               return ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
-                  itemBuilder: (context, index) => CustomTile(
-                      description: state.response[index].body.toString()),
+                  itemBuilder: (context, index) =>
+                      CustomTile(data: state.response[index],index: index),
                   itemCount: state.response.length);
             }
             return Center(
-                child: Text("Data Not Found",
-                    style: TextStyle(
-                        color: Colors.red.shade800,
-                        fontWeight: FontWeight.w700)));
+                child:
+                    Text("Data Not Found", style: AppTextStyles.dataNotFound));
           },
         ),
       ),
