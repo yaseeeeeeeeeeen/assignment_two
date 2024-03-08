@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:implause_assignment/blocs/fetch/fetch_bloc.dart';
 import 'package:implause_assignment/models/issues_model.dart';
@@ -32,12 +30,15 @@ class CustomTile extends StatelessWidget {
             children: [
               ListTile(
                   trailing: const SizedBox(width: 20),
-                  leading: CircleAvatar(
-                    radius: 27,
-                    backgroundColor: AppColors.appbarColor,
+                  leading: Hero(
+                    tag: data.id,
                     child: CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(data.user.avatarUrl),
+                      radius: 27,
+                      backgroundColor: AppColors.appbarColor,
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundImage: NetworkImage(data.user.avatarUrl),
+                      ),
                     ),
                   ),
                   title: Text(data.title),

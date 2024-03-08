@@ -8,31 +8,36 @@ import 'package:implause_assignment/view/home_screen.dart';
 import 'package:implause_assignment/view/spash_screen.dart';
 
 void main() {
-  runApp(const GitIssuesApp());
+  runApp(
+    BlocProvider(
+      create: (context) => FetchBloc(),
+      child: const GitIssuesApp(),
+    ),
+  );
 }
 
 class GitIssuesApp extends StatelessWidget {
-  const GitIssuesApp({super.key});
+  const GitIssuesApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
         "/FavRepos": (context) => const FavoriteRepos(),
-        "/ToHome": (context) => const HomeScreen()
+        "/ToHome": (context) => HomeScreen(),
       },
       theme: ThemeData(
-          fontFamily: "Poppins",
-          appBarTheme: AppBarTheme(
-              backgroundColor: AppColors.appbarColor,
-              centerTitle: true,
-              titleTextStyle: AppTextStyles.appbarTextStyle)),
+        fontFamily: "Poppins",
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: AppColors.white),
+          backgroundColor: AppColors.appbarColor,
+          centerTitle: true,
+          titleTextStyle: AppTextStyles.appbarTextStyle,
+        ),
+      ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (context) => FetchBloc(),
-        child: const HomeScreen(),
-      ),
+      home: const SplashScreen(),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:implause_assignment/blocs/fetch/fetch_bloc.dart';
 import 'package:implause_assignment/utils/styles/colors.dart';
 import 'package:implause_assignment/utils/styles/textstyles.dart';
 import 'package:implause_assignment/utils/widgets/custom_tile.dart';
+import 'package:implause_assignment/view/preview_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,8 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   physics: const BouncingScrollPhysics(),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
-                  itemBuilder: (context, index) =>
-                      CustomTile(data: state.response[index],index: index),
+                  itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              PreviewProblem(data: state.response[index]),
+                        ));
+                      },
+                      child: CustomTile(
+                          data: state.response[index],
+                          index: state.response[index].id)),
                   itemCount: state.response.length);
             }
             return Center(

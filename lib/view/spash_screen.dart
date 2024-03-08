@@ -8,8 +8,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  @override
   Widget build(BuildContext context) {
+    dataFetch();
     return const Scaffold(
       body: Center(
         child: Text("Git Track",
@@ -20,6 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   dataFetch() async {
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.of(context).pushNamedAndRemoveUntil("/ToHome", (route) => false);
+    if (mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil("/ToHome", (route) => false);
+    }
   }
 }
