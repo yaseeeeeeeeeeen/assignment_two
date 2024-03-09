@@ -22,19 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
-      appBar: AppBar(
-        title: const Text("Git Track"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed("/FavRepos");
-              },
-              icon: Icon(Icons.star, color: AppColors.favIconColor))
-        ],
-      ),
+      appBar: AppBar(title: const Text("Git Track")),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: BlocBuilder<FetchBloc, FetchState>(

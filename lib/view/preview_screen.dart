@@ -14,7 +14,8 @@ class PreviewProblem extends StatelessWidget {
       appBar: AppBar(title: const Text("Issue Preview")),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             CustomTile(data: data, index: data.id),
             const SizedBox(height: 10),

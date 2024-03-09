@@ -5,6 +5,7 @@ import 'package:implause_assignment/models/issues_model.dart';
 import 'package:implause_assignment/utils/styles/colors.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class CustomTile extends StatelessWidget {
   CustomTile({super.key, required this.data, required this.index});
   final GitIssues data;
@@ -26,51 +27,24 @@ class CustomTile extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            children: [
-              ListTile(
-                  trailing: const SizedBox(width: 20),
-                  leading: Hero(
-                    tag: data.id,
-                    child: CircleAvatar(
-                      radius: 27,
-                      backgroundColor: AppColors.appbarColor,
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(data.user.avatarUrl),
-                      ),
-                    ),
+          ListTile(
+              trailing: const SizedBox(width: 20),
+              leading: Hero(
+                tag: data.id,
+                child: CircleAvatar(
+                  radius: 27,
+                  backgroundColor: AppColors.appbarColor,
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(data.user.avatarUrl),
                   ),
-                  title: Text(data.title),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(data.user.login), Text(formattedDate)],
-                  )),
-              Positioned(
-                  right: 5,
-                  child: BlocConsumer<FetchBloc, FetchState>(
-                    buildWhen: (previous, current) => current is AddToFav,
-                    listener: (context, state) {},
-                    builder: (context, state) {
-                      if (state is AddToFav) {
-                        if (state.index == index) {
-                          fav = true;
-                        }
-                      }
-                      return IconButton(
-                          onPressed: () {
-                            context
-                                .read<FetchBloc>()
-                                .add(AddedToFav(index: index));
-                          },
-                          icon: Icon(Icons.star,
-                              color: fav
-                                  ? AppColors.favIconColor
-                                  : AppColors.iconWithoutSelect));
-                    },
-                  )),
-            ],
-          ),
+                ),
+              ),
+              title: Text(data.title),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text(data.user.login), Text(formattedDate)],
+              )),
           Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               child: Text(data.body.toString().length < 200
